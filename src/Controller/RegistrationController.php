@@ -26,7 +26,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/registration", name="actionRegistration", methods={"POST"})
      */
-    public function actionRegistration(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function registrationAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);

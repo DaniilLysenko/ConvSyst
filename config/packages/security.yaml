@@ -7,6 +7,9 @@ security:
             security: false
         main:
             anonymous: true
+            form_login:
+                login_path: login
+                check_path: login
 
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
