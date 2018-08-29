@@ -3,7 +3,10 @@
 {% block body %}
 
     <div class="container">
-
+        <h2>Registration</h2>
+        <hr>
+        {% form_theme regForm 'bootstrap_4_layout.html.twig' %}
+        {{ form(regForm) }}
     </div>
 
 {% endblock %}

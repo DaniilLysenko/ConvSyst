@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -17,17 +19,30 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=100)
+     * @Assert\Length(min = 5,max = 100, minMessage="Username should be more than {{ limit }} characters")
+     * @Assert\NotBlank(message="Username can not be blank")
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email(message = "The email is not valid")
+     * @Assert\NotBlank(message="Email can not be blank")
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=10)
+     * @Assert\Choice({"man", "woman"}, message="Choice valid sex type")
+     * @Assert\NotBlank(message="Sex type can not be blank")
+     */
+    private $sex;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\Length(min = 5,max = 20, minMessage="Password should be more than {{ limit }} characters")
+     * @Assert\NotBlank(message="Password can not be blank")
      */
     private $password;
 
@@ -35,6 +50,11 @@ class User
      * @ORM\Column(type="array")
      */
     private $roles;
+
+    public function __construct()
+    {
+        $this->roles = array('ROLE_USER');
+    }
 
     public function getId(): ?int
     {
@@ -65,6 +85,18 @@ class User
         return $this;
     }
 
+    public function getSex(): ?string
+    {
+        return $this->sex;
+    }
+
+    public function setSex(string $sex): self
+    {
+        $this->sex = $sex;
+
+        return $this;
+    }
+
     public function getPassword(): ?string
     {
         return $this->password;
@@ -82,10 +114,20 @@ class User
         return $this->roles;
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles($role): ?string
     {
-        $this->roles = $roles;
+        $this->roles[] = $role;
 
         return $this;
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+
     }
 }
