@@ -40,7 +40,7 @@ class User implements UserInterface
     private $sex;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=255)
      * @Assert\Length(min = 5,max = 20, minMessage="Password should be more than {{ limit }} characters")
      * @Assert\NotBlank(message="Password can not be blank")
      */
