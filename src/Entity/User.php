@@ -5,10 +5,20 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="This email already in used"
+ * )
+ * @UniqueEntity(
+ *     fields={"username"},
+ *     message="This username already in used"
+ * )
  */
+
 class User implements UserInterface
 {
     /**

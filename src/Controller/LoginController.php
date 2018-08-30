@@ -15,10 +15,20 @@ class LoginController extends AbstractController
     public function loginAction(AuthenticationUtils $authenticationUtils)
     {
         $error = $authenticationUtils->getLastAuthenticationError();
-        $logForm = $this->createForm(LoginType::class);
+        $lastUsername = $authenticationUtils->getLastUsername();
+        $logForm = $this->createForm(LoginType::class,[
+            'username' => $lastUsername
+        ]);
         return $this->render('login/index.html.twig', [
             'error' => $error,
             'logForm' => $logForm->createView()
         ]);
+    }
+
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logoutAction()
+    {
     }
 }
